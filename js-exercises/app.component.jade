@@ -1,0 +1,51 @@
+p 主调用平台
+
+ol
+  li 参考doc文件夹代码，如/doc/step-auth, /doc/step-data，学习jade模板语法以及ng2的视图模板语法
+  li 学会使用以下指令或功能，并在本页面写出以下几个的使用例子：
+    ol
+      li *ngIf
+         div(*ngIf="isAuthed")//如果变量isAuthed为true,则此个div在页面中显示
+      li *ngFor
+         option(*ngFor="let opt of authStockData", [value]="opt.stockAccount") 
+         //authStockData是一个数组，用*ngFor来循环取值，放到value里
+      li (click)
+         button.u-btn-outline((click)="reWrite()") 重抄
+         //click点击事件，会调用reWrite函数去做一些事情
+         (change)
+         select.u-input.h30((change)="onChangeStockAccount($event)")
+         option(*ngFor="let opt of authStockData", [value]="opt.stockAccount") {{opt.stockAccount}}
+         //更改证券账号时，会触发onChangeStockAccount函数
+      li 双向数据绑定 [(ngModel)]
+      	 input.u-input(type="password", [(ngModel)]="client.transPass", placeholder="请输入您的交易密码", required, ngControl="transPass")
+         //[(ngModel)]="client.transPass",这段，前端输入的密码会绑定到ts文件里面的client.transPass变量
+      li setTimeout模拟异步数据绑定
+          <input type="text" value="c" name="input" onkeydown="alert(this.value)" />
+          <input type="text" value="d" name="input" onkeydown="var me=this;setTimeout(function(){alert(me.value)},0)" />
+          	第一个在keydown的时候，弹出来的是input里原来的value，
+      			而第2个在keydown的时候，却能弹出更新后的value，
+      			就是因为setTimeout，虽然他的delay设置为0，几乎是即时触发，
+      			但还是被添加到了执行队列后面，但就是这个过程，渲染已经完成了，
+      			当他回调函数执行时，输出来的已经是更新后的value了
+      li ngSwitch, ngSwitchCase
+      	 div([ngSwitch]="contractType")
+      			div(*ngSwitchCase="'t+2'")
+               .u-gapTop20
+               .u-whitePanel.i-writeWrap
+               p 声明：
+               strong 以下内容由具备两年以上（含两年）股票交易经验且风险测评结果不属于风险承受能力低（保守型）的投资者抄写：
+               p 请用手写板在下方抄写以下
+               b 黑体
+               | 内容：
+              p.i-writeTemplate 本人确认已阅读并理解创业板市场相关规则和上述风险揭示书的内容，具有相应的风险承受能力，自愿承担参与创业板投资的风险和损失。
+              .i-writePlaceholder
+              p.i-writePlaceholderTip 请点击该处开始抄写
+         //根据选中的签约类型值显示对应部分，上面如果签约类型是t+2，则做抄写部分的逻辑
+
+p 比如*ngIf和click的例子：
+
+div
+  button((click)="toggle(true)") 显示语句
+  button((click)="toggle(false)") 隐藏语句
+  p(*ngIf="isShowText") 这是一个示例句子
+

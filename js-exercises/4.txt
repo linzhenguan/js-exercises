@@ -1,0 +1,38 @@
+var out = 25,
+     inner = {
+          out: 20,
+          func: function () {
+              var out = 30;
+              return this.out;
+          }
+  };
+  console.log((inner.func, inner.func)());
+  console.log(inner.func());
+  console.log((inner.func)());
+  console.log((inner.func = inner.func)());
+  
+四个console.log语句返回分别是：
+25，20，20，25
+
+1、console.log((inner.func, inner.func)())
+因为(inner.func, inner.func)是进行逗号运算符，逗号运算符就是 运算前面的，
+返回最后一个，(inner.func, inner.func)就是返回inner.func，
+而inner.func是一个匿名函数，此时this指向的是全局的windows，所以out=25
+可以用console.log(this)打印出此时this对象的内容
+
+2、console.log(inner.func())
+inner.func()是函数调用，作用域是inner，所以out=20
+可以用console.log(this)打印出此时this对象的内容
+
+3、console.log((inner.func)())
+inner.func()也是是函数调用，作用域是inner，所以out=20
+可以用console.log(this)打印出此时this对象的内容
+
+4、console.log((inner.func = inner.func)())
+首先是一个等号运算符,所以inner.func = inner.func 返回的也是一个匿名函数
+function () {
+    var out = 30;
+    return this.out;
+}
+这以后道理就和第一个console.log一样了 输出的结果是 25
+可以用console.log(this)打印出此时this对象的内容

@@ -1,0 +1,14 @@
+5. 查看以下代码，试图了解其原理。
+
+  ```js
+  function b(x, y, a) {
+    arguments[2] = 10;
+    alert(a);
+  }
+  b(1, 2, 3);
+  
+  
+解答：
+arguments依赖于function对象，
+在函数体内，标识符arguments是指向实参对象的引用，实参对象是一个类数组对象 arguments[]，下标从0开始，
+所以arguments[2]等于a，arguments[2] = 10会给a赋值，最后打印出10
